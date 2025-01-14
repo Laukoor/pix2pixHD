@@ -88,13 +88,15 @@ class Pix2PixHDModel(BaseModel):
             # 初始化优化器
             # 优化器 G
             if opt.niter_fix_global > 0:  # 固定全局生成器部分
+                # ========处理python版本的兼容性==============
                 import sys
                 if sys.version_info >= (3,0):
                     finetune_list = set()
                 else:
                     from sets import Set
                     finetune_list = Set()
-
+                # =========================================
+                
                 params_dict = dict(self.netG.named_parameters())
                 params = []
                 for key, value in params_dict.items():  # 遍历生成器参数
